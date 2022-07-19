@@ -1,0 +1,78 @@
+Rendering condicional:
+
+
+export function LoadingComponent(){
+    const[loading, setLoading]=useState(true);
+    useEffect(()=>{
+    setTimeout(()=>{
+    setLoading(false);
+    },5000)
+    },[])
+return <>
+            {loading?<h2>cargando...</h2>:<h3>Productos cargados!</h3>
+    </>
+
+cuando se cambia de componente se desmonta el anterior (por ejemplo el h2 que dice cargando, cuando deje de cargar, se desmonta, es decir, se pierde) por lo que a veces puede perjudicarnos al perder un componente con childrens, por eso en los cart se usa el contexto.
+-sirven para hacer aparecer y desaparecer nodos (como se entendio en la explicacion anterior)
+-son eventos que provocan desmontaje
+-se llama al efecto de desmontaje,para poder detectarlo 
+-podemos usar los cleanup effects para detectar algun dismounting si no sabemos con certeza si ocurre
+                (export function LoadingComponent(){
+                    const[loading, setLoading]=useState(true);
+                    useEffect(()=>{
+                    setTimeout(()=>{
+                    setLoading(false);
+                    },5000)
+                    },[])
+                    
+            const Loading =()=>{
+                useEffect(()=>{return()=>{console.log(desmontando)}})
+                return(<h2>cargando...</h2>)
+                }
+
+                return <>
+                            {loading?<Loading/>:<h3>Productos cargados!</h3>
+                    </Loading>)
+-a veces se producen sin la intencion y causan bugs o perdida de estado dando inestabilidad.
+TECNICAS DE RENDERING 
+    If con retorno temprano:
+
+export function TextComponent({condition=false}){
+    const token=localStorage.getItem('token')
+    if(!token){
+        return <h2>Ud no esta logeado</h2>
+    }
+}//esto es el retorno temprano, porque no se llega al otro retorno si no se cumple la condicion.
+return(
+    <>
+        <h2>Ud esta loguieado</h2>
+    </>
+    )
+    
+}
+
+
+        Inline con fragment:
+    export function TextComponent2({condition=true}){
+        //llamado context if(){}
+        return(
+        <>
+        {condition&&<h2>uf esta logueado puede ver el contenido</h2>}
+        {!condition<h2>ud no esta logueado no puede acceder al contenido</h2>}
+        </>
+        )
+        }
+
+        Inline Ternary
+    export function TextComponent3({condition}){
+        return <h2>{condition? 'ud esta logueado':'usted no esta logueado'} </h2>
+    }
+
+Condicionales de style
+export TextComponent4=({condition=false})=>{
+return(
+    <>
+    <h2 style{{color:condition?'green':'red'}}>Texto de color</h2>
+    </>
+)
+}

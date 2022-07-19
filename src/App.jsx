@@ -1,28 +1,38 @@
+import { BrowserRouter as Rutas, Routes, Route, Navigate } from 'react-router-dom'
 import './App.css'
 import NavBar from './Components/NavBar/NavBar'
 import Titulo from './Components/Pruebas/Titulo'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ItemCount from './Components/ItemCount/ItemCount';
 import ItemListContainer from './Components/Conteiners/ItemListContainer/ItemListContainer';
 import ItemDetailContainer from './Components/Conteiners/ItemDetailContainer/ItemDetailContainer';
+import Cart from './Components/Cart/Cart';
+import Inexistente from './Components/Inexistente/Inexistente';
+import {  CartContextProvider } from './Components/Context/cartContext';
+
+
 function App() {
-  console.log('alan')
   let subtituloApp = "Instrumentos Musicales"
   let tituloApp='Lotus'
   let saludo ='Bienvenidos a Lotus'
-  const onAdd=(count)=>{console.log(count)}
-  const stock= 7
-  const initial = 1
-  return(<>
-  <NavBar/>
-  <Titulo titulo={tituloApp} subtitulo={subtituloApp}/>
-  <ItemListContainer saludo={saludo}/>
-  <ItemCount 
-                onAdd={onAdd} 
-                initial={initial} 
-                stock={stock}/>
-  <ItemDetailContainer/>
-  </>
+
+  return(
+    <CartContextProvider
+    //value={}
+    >
+            <Rutas>
+              <NavBar/>
+              <Titulo titulo={tituloApp} subtitulo={subtituloApp}/>
+              <Routes>
+                <Route path='/'element={<ItemListContainer saludo={saludo}/>}/>
+                <Route path='/categoria/:categoriaId'element={<ItemListContainer saludo={saludo}/>}/>
+                <Route path='/detalle/:id'element={<ItemDetailContainer/>}/>
+                <Route path='/cart'element={<Cart/>}/>
+                <Route path='*' element={<Navigate to='/Inexistente'/>}/>
+                <Route path='/Inexistente' element={<Inexistente/>}/>
+              </Routes>
+              
+            </Rutas>
+    </CartContextProvider>
   )
 }
 

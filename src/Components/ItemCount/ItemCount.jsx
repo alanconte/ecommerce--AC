@@ -1,3 +1,4 @@
+import { Button } from 'bootstrap'
 import React from 'react'
 import { useState } from 'react'
 const ItemCount = ({initial, stock, onAdd}) => {
@@ -13,13 +14,14 @@ const restar = ()=>{
 const agregar=()=>{
     onAdd(count)
 }
-return(<>
+return(
+<div className='button'>
+<button className='btn ' onClick={restar}>-</button>
+<p className='count'> {count} </p>
+<button  className='btn ' onClick={sumar}>+</button>
+<button  className='btn '  onClick={agregar}>Agregar</button>
+</div>
 
-<button onClick={restar}>-</button>
-<p>{count}</p>
-<button onClick={sumar}>+</button>
-<button onClick={agregar}>Agregar</button>
-</>
 )
 
 }

@@ -1,22 +1,34 @@
 import { useEffect, useState } from "react";
-import Contador from "../../Contador/Contador"
-import ItemCount from "../../ItemCount/ItemCount"
+import { useParams } from "react-router-dom";
 import { getFetch } from "../../../helpers/getFetch";
 import ItemList from "../../ItemList/ItemList";
+import Input from "../../Pruebas/Input";
+import {Intercambiavilidad} from "../../Pruebas/Intercambiavilidad";
 
 const ItemListContainer = ({saludo}) => {  
   const[loading, setLoading]=useState(true)
   const [productos, setProductos] = useState([])
-    useEffect(()=>{
+  const { categoriaId }=useParams()
   
+  
+  useEffect(()=>{
+    if (categoriaId) {
+      getFetch()
+      .then((resp)=>{
+        setProductos(resp.filter(producto=>producto.categoria===categoriaId))
+        setLoading(false)
+        })
+      .catch(err=>{console.log(err)})
+      } else {
       getFetch()
       .then((resp)=>{
         setProductos(resp)
         setLoading(false)
         })
       .catch(err=>{console.log(err)})
-      .finally(()=>console.log())
-},[])
+      
+    }
+},[categoriaId])
   return ( 
     <div>
     { loading ? 
@@ -30,6 +42,8 @@ const ItemListContainer = ({saludo}) => {
       </div>
 
     }
+  <Input/>
+  <Intercambiavilidad/>
   </div>
   )
 }
