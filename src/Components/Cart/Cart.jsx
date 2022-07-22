@@ -25,7 +25,6 @@ const Cart = () => {
                     <div className="botonesCarrito">
                         <button className="btn btn-outline-danger" onClick={vaciarCarrito}>Vaciar Carrito</button>
                         <Link to="/"><button className="btn btn-outline-danger">Seguir Comprando</button> </Link>
-                        
                     </div>
                 </div>
             </div>
