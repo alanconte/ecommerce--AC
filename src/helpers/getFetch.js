@@ -21,3 +21,4 @@ const productos = [
                             },3000)
                           })};
 
+//category-detail-img-name-price-stock

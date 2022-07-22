@@ -24,9 +24,9 @@ const ItemDetail = ({producto}) => {
       <img className="imgDetail" src={producto.img} alt="" />
     </div>
     <div className="cardDetail">
-      <h2>nombre: {producto.nombre}</h2>
-      <h3>detalles: {producto.detalles}</h3>
-      <h4>precio: {producto.precio}</h4>
+      <h2>nombre: {producto.name}</h2>
+      <h3>detalles: {producto.detail}</h3>
+      <h4>precio: {producto.price}</h4>
     </div>
       <div>
         {

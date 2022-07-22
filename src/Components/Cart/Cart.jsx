@@ -1,26 +1,39 @@
-import { useState } from "react"
+import { Link } from "react-router-dom"
 import { useCartContext } from "../Context/cartContext"
-import img from './Cart.css'
+import './Cart.css'
+import { CartEmpty } from "./CartEmpty"
+import CartListDetail from "./CartListDetail"
 
 
 const Cart = () => {
-  const{ cart }=useCartContext() 
+  const{ cart, vaciarCarrito , total }=useCartContext() 
   console.log()
   
   return (
-    <div>
-        <ul>
-          {cart.map(item=>
-          <li key={item.id}> 
+    <>
+      <div>
             <div>
-              <img src={item.img} className='img' />
+            <h1>Tus Compras</h1>
             </div>
-            Producto:{item.nombre}
-            Precio unitario: {item.precio} 
-            Cantidad: {item.cantidad}
-          </li>)}
-        </ul>
-      </div>
+            {cart.length > 0 ? 
+            <div>
+                <CartListDetail />
+                <div className="totalPrice"> 
+                <p>Total : ${total()}</p>
+                </div>
+                <div className="total">
+                    <div className="botonesCarrito">
+                        <button className="btn btn-outline-danger" onClick={vaciarCarrito}>Vaciar Carrito</button>
+                        <Link to="/"><button className="btn btn-outline-danger">Seguir Comprando</button> </Link>
+                        
+                    </div>
+                </div>
+            </div>
+                            : 
+                <CartEmpty />
+            }
+        </div>
+    </>
   )
 }
 

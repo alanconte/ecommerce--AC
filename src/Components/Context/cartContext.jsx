@@ -1,6 +1,4 @@
-import { useContext } from "react";
-import { createContext } from "react";
-import { useState } from "react";
+import { useContext, useState, createContext } from "react";
 
 
 const CartContext = createContext([])
@@ -14,21 +12,49 @@ export const CartContextProvider=({children})=>{
 const [cart,setCart]=useState([])
 
 const addToCart =(item)=>{
-    let carritoPrevio=[...cart]
-    if(carritoPrevio.some((item)=>item.id===item.id)){
-        carritoPrevio.find((item)=>item.id===item.id).quantity+=item.quantity
-        setCart(carritoPrevio)
+    const indice=cart.findIndex(i => i.id === item.id)
+        if (indice > -1){
+            const cantidadVieja= cart[indice].cantidad
+            let cantidadNueva= cantidadVieja + item.cantidad
+            cart[indice].cantidad=cantidadNueva
+            let arrAux = [...cart]
+            setCart(arrAux)
+    
+        }else{
+            setCart([...cart, item])
+        }
     }
-        setCart([
-        ...cart,
-        item
-        ]);
+function vaciarCarrito(){
+    setCart([])
+}
+
+function removeItemCarrito(itemId){
+    
+    setCart(cart.filter(item => item.id !== itemId))
+    console.log("Click")
+    
+}
+
+function total () {
+    const sumaTotal = cart.map(valorTotal => valorTotal.cantidad * valorTotal.price).reduce((prev,curr)=> prev + curr,0)
+
+    return sumaTotal
+}
+
+function mostrarCantidad () {
+    const mostrar = cart.map( mostrar => mostrar.cantidad).reduce((prev,curr) => prev + curr,0)
+
+    return mostrar
 }
 
     return(
         <CartContext.Provider 
         value={{cart,
-        addToCart
+        addToCart,
+        vaciarCarrito,
+        removeItemCarrito,
+        mostrarCantidad,
+        total,
     }}
         >
             {children}

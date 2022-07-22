@@ -29,6 +29,8 @@ function App() {
                 <Route path='/cart'element={<Cart/>}/>
                 <Route path='*' element={<Navigate to='/Inexistente'/>}/>
                 <Route path='/Inexistente' element={<Inexistente/>}/>
+                {/* <Route path="/checkout" element={<Checkout/>} />
+                <Route path="/formCheckout2" element={<FormCheckout2/>}/> */}
               </Routes>
               
             </Rutas>
